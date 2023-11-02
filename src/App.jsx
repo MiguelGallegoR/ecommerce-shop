@@ -1,12 +1,12 @@
-import { useState } from 'react'
-import viteLogo from '/vite.svg'
+import { Header } from './components/Header'
+import 'antd'
 import './App.css'
 
 function App() {
 
   return (
     <>
-      <h1>ECOMMERCE SHOP</h1>
+    <Header></Header>
     </>
   )
 }
