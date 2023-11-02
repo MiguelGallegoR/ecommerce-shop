@@ -1,0 +1,46 @@
+@font-face {
+    font-family: 'fuente-miguel';
+    src: url('../fonts//IBM/IBMPlexSans-Light.ttf') format('truetype'); /* Ajusta la ruta y el formato según tus archivos de fuente */
+    font-weight: normal;
+    font-style: normal;
+  }
+.header{
+    background-color: red;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    
+}
+
+.header-title{
+    background-color: yellow;  
+    text-align: center;
+    font-family: 'fuente-miguel';
+}
+.category-menu-container{
+    background-color: aquamarine;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    
+}
+.category-menu{
+    grid-column: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    list-style: none;
+    gap: 1.5rem;
+}
+
+.user-menu-container{
+    background-color: blue;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.user-menu{
+    grid-column: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    width: 70%;
+    
+}
