@@ -242,4 +242,52 @@ export const categories = [
       },
     ],
   },
+  {
+    id: 4,
+    name: "Brands",
+    subcategories: [
+      {
+        id: 401,
+        name: "Adidas",
+        groups: [
+          {
+            id: 4001,
+            name: "T-Shirts",
+            products: [
+              // Productos de camisas para Adidas
+            ],
+          },
+          // más grupos y productos de ropa para Adidas
+          {
+            id: 4002,
+            name: "Shoes",
+            products: [
+                
+            ]
+          }
+        ],
+      },
+      {
+        id: 402,
+        name: "Puma",
+        groups: [
+          {
+            id: 4003,
+            name: "T-Shirts",
+            products: [
+              // Productos de camisas para Puma
+            ],
+          },
+          // más grupos y productos de ropa para Puma
+          {
+            id: 4004,
+            name: "Shoes",
+            products: [
+              // Productos de zapatillas para Puma
+            ],
+          },
+        ],
+      }
+    ]
+  }
 ];
