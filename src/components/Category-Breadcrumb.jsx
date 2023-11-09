@@ -1,14 +1,17 @@
 import React from "react";
 import { Breadcrumb } from "antd";
 import { categories } from "../mock/categories.js";
+import {useParams} from "react-router-dom";
+
 export const CategoryBreadcrumb = () => {
+  const {gender} = useParams();
   return (
     <>
       <Breadcrumb
         separator="->"
         items={[
           {
-            title: categories[0].name
+            title: gender
           },
           {
             title: categories[0].subcategories[0].name,
