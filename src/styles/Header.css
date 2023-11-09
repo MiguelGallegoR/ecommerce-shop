@@ -15,17 +15,22 @@
     text-align: center;
     font-family: 'fuente-miguel';
 }
-.category-menu-container{
+.gender-menu-container{
     display: grid;
     grid-template-columns: 2fr 1fr;
     
 }
-.category-menu{
+.gender-menu{
     grid-column: 1;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     list-style: none;
     gap: 1.5rem;
+}
+
+.gender-menu-item{
+    text-decoration: none;
+    color: black;
 }
 
 .user-menu-container{
