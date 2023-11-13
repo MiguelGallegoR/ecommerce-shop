@@ -40,7 +40,7 @@ export default function ListOfProducts() {
               cover={
                 <img
                   alt="example"
-                  src={`http://localhost:1234/images${product.photo}`}
+                  src={`${import.meta.env.VITE_URL_PREFIX}${product.photo}`}
                 />
               }
             >
