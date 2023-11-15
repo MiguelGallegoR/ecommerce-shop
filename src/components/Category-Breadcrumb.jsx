@@ -1,29 +1,23 @@
 import React from "react";
 import { Breadcrumb } from "antd";
-import { categories } from "../mock/categories.js";
-import {useParams} from "react-router-dom";
-
+import { useParams, useLocation, Link } from "react-router-dom";
+import { router } from "../main";
 export const CategoryBreadcrumb = () => {
-  const {gender} = useParams();
+  const location = useLocation();
+  const pathSnippets = location.pathname.split('/').filter(i => i);
+
   return (
     <>
-      <Breadcrumb
-        separator="->"
-        items={[
-          {
-            title: gender
-          },
-          {
-            title: categories[0].subcategories[0].name,
-            href: "",
-          },
-          {
-            title: categories[0].subcategories[0].groups[0].name,
-            href: "",
-          }
-        ]}
-      />
+      {pathSnippets.map((snippet, index) => {
+        const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
+        return (
+          <Breadcrumb key={url} items={[{ title: <Link to={url}>{snippet}</Link> }]}
+            separator="->"
+          />
+        );
+      })}
     </>
-  );
+    
+  )
 };
 export default CategoryBreadcrumb;
