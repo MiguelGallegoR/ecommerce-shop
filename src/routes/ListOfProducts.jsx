@@ -2,7 +2,7 @@ import { useQueryClient, useQuery } from "@tanstack/react-query";
 import getAllProducts from "../services/allProducts.js";
 import { Card } from "antd";
 import "../styles/ListOfProducts.css";
-
+import { getRandomProducts } from "../helpers/helpers.js";
 const { Meta } = Card;
 export default function ListOfProducts() {
   //2. uso el query cliente
@@ -16,7 +16,9 @@ export default function ListOfProducts() {
       if (!products) {
         return [];
       }
-      return products;
+      const randomProducts = getRandomProducts(products, 10);
+      console.log(randomProducts);
+      return randomProducts;
     },
   });
 
@@ -30,8 +32,9 @@ export default function ListOfProducts() {
 
   return (
     <>
+      <h2 className="list-of-products-title">Some of our products:</h2>
+
       <div className="list-of-products-container">
-        <h1>List of Products</h1>
         <ul className="list-of-products">
           {data.map((product) => (
             <li key={product._id} className="product">
