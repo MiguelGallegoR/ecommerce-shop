@@ -13,12 +13,14 @@ export function Gender() {
   const { isPending, isError, data, error } = useQuery({
     queryKey: ["products", gender],
     queryFn: async () => {
-      const products = await getAllProductsByGender(gender);
-      if (!products) {
+      const productsWithGroups = await getAllProductsByGender(gender);
+      const {allProducts, groups} = productsWithGroups
+      console.log('all products: ', allProducts)
+      console.log('all groups: ', groups)
+      if (!productsWithGroups) {
         return [];
       }
-      const randomProducts = getRandomProducts(products, 10);
-      console.log(randomProducts);
+      const randomProducts = getRandomProducts(allProducts, 10);
       return randomProducts;
     },
   });
@@ -33,7 +35,7 @@ export function Gender() {
   return (
     <div>
 
-      <h1>{gender}</h1>
+      <h1>Some {gender} products</h1>
       <div className="list-of-products-container">
         <ul className="list-of-products">
           {data.map((product) => (
