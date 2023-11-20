@@ -15,8 +15,6 @@ export function Gender() {
     queryFn: async () => {
       const productsWithGroups = await getAllProductsByGender(gender);
       const {allProducts, groups} = productsWithGroups
-      console.log('all products: ', allProducts)
-      console.log('all groups: ', groups)
       if (!productsWithGroups) {
         return [];
       }
