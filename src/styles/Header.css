@@ -33,6 +33,14 @@
     color: black;
 }
 
+
+.dropdown-menu-item{
+    display: grid;
+    grid-template-columns: 1fr!important;
+    color: black;
+}
+
+
 .user-menu-container{
     display: grid;
     grid-template-columns: 1fr 1fr;
