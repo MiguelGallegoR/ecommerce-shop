@@ -33,7 +33,7 @@ export function Gender() {
   return (
     <div>
 
-      <h1>Some {gender} products</h1>
+      <h1 className="list-of-products-title">Some {gender} products</h1>
       <div className="list-of-products-container">
         <ul className="list-of-products">
           {data.map((product) => (
