@@ -32,7 +32,7 @@ export default function ListOfProducts() {
 
   return (
     <>
-      <h2 className="list-of-products-title">Some of our products:</h2>
+      <h1 className="list-of-products-title">Some of our products:</h1>
 
       <div className="list-of-products-container">
         <ul className="list-of-products">
