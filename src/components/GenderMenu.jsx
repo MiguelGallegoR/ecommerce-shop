@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useQueryClient, useQuery, useQueries } from "@tanstack/react-query";
 import { getAllCategorys } from "../services/allCategorys";
 import { getAllProductsByGender } from "../services/allGenderProducts";
+import { capitalizeFirstLetter } from "../helpers/helpers";
 import { Dropdown } from "antd";
 export function GenderMenu() {
   const genders = {
@@ -63,7 +64,6 @@ export function GenderMenu() {
   groupsData?.[1].push("mens");
   groupsData?.[2].push("kids");
 
-
   if (isCategorysPending) {
     return <span>Loading...</span>;
   }
@@ -71,6 +71,9 @@ export function GenderMenu() {
   if (isCategorysError) {
     return <span>Error: {error.message}</span>;
   }
+
+  
+
   return (
     <div className="gender-menu-container">
       <ul className="gender-menu">
@@ -83,37 +86,51 @@ export function GenderMenu() {
                     {
                       key: "1",
                       label: (
-                        <div>
+                        <div className="dropdown-menu-item-container">
                           {categorys?.map((categoryItem) => {
                             let category = categoryItem;
-                              const resultadoFiltrado = groupsData.filter(item => item.includes(key))
-                              return (
-                                <div key={categoryItem}>
-                                  <Link
-                                    className="dropdown-category"
-                                    to={`${key}/${categoryItem}`}
-                                  >
-                                    {categoryItem}
-                                  </Link>
-                                  <div className="dropdown-menu">
-                                    {resultadoFiltrado[0]
-                                      .filter(
-                                        (group) =>
-                                          group.category === categoryItem
-                                      )
-                                      .map((filteredGroup) => (
-                                        <Link
-                                          className="dropdown-menu-item"
-                                          to={`${key}/${categoryItem}/${filteredGroup.groups}`}
-                                          key={`${categoryItem}-${filteredGroup.groups}`}
-                                        >
-                                          {filteredGroup.groups}
-                                        </Link>
-                                      ))}
-                                  </div>
+                            const filteredResult = groupsData.filter((item) =>
+                              item.includes(key)
+                            );
+                            return (
+                              <div
+                                key={categoryItem}
+                                className="dropdown-menu-item-container"
+                              >
+                                <Link
+                                  className="dropdown-menu-category"
+                                  to={`${key}/${categoryItem}`}
+                                >
+                                  {capitalizeFirstLetter(categoryItem)}
+                                </Link>
+                                <div className="dropdown-menu-group-container" key={`${key}/${categoryItem}`}>
+                                  {filteredResult[0]
+                                    .filter(
+                                      (group) => group.category === categoryItem
+                                    )
+                                    .map((filteredGroup) => (
+                                      <div key={`${key}/${categoryItem}`}>
+                                        {filteredGroup.groups.map(
+                                          (groupElement) => (
+                                            <div
+                                              key={`${groupElement}`}
+                                            >
+                                              <Link
+                                                className="dropdown-menu-group"
+                                                to={`${key}/${categoryItem}/${groupElement}`}
+                                              >
+                                                {capitalizeFirstLetter(
+                                                  groupElement
+                                                )}
+                                              </Link>
+                                            </div>
+                                          )
+                                        )}
+                                      </div>
+                                    ))}
                                 </div>
-                              );
-                           
+                              </div>
+                            );
                           })}
                         </div>
                       ),
