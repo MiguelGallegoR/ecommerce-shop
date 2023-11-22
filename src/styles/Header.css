@@ -33,11 +33,28 @@
     color: black;
 }
 
-
-.dropdown-menu-item{
+.dropdown-menu{
     display: grid;
     grid-template-columns: 1fr!important;
-    color: black;
+}
+
+
+.dropdown-menu-item-container{
+    display: grid;
+    grid-template-columns: 1fr!important;
+}
+
+.dropdown-menu-group-container{
+    display: grid;
+    grid-template-columns: 1fr!important;
+    color: black!important;
+}
+
+.dropdown-menu-group{
+    display: grid;
+    grid-template-columns: 1fr!important;
+    color: black!important;
+    padding-left: 1em;
 }
 
 
