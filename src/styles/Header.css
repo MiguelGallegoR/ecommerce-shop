@@ -33,6 +33,10 @@
     color: black;
 }
 
+.gender-menu-item-li{
+    margin: 0 auto;
+}
+
 .dropdown-menu{
     display: grid;
     grid-template-columns: 1fr!important;
