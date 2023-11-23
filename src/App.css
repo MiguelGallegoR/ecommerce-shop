@@ -7,4 +7,14 @@
 
   body{
     font-family: 'prueba';
+    margin: 0 auto;
+    max-width: 1800px;
   }
+
+  .breadcrumb-container{
+    display: grid;
+    grid-template-columns: 1fr;
+    margin: 0 auto;
+    gap: 1.5em
+  }
+  
