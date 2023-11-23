@@ -79,7 +79,7 @@ export function GenderMenu() {
       <ul className="gender-menu">
         {Object.entries(genders).map(([key, value]) => {
           return (
-            <li key={key}>
+            <li key={key} className="gender-menu-item-li">
               <Dropdown
                 menu={{
                   items: [
@@ -141,12 +141,14 @@ export function GenderMenu() {
                 className="dropdown-menu"
               >
                 <Link to={`/${key}`} className="gender-menu-item">
-                  {value}
+                  {value.toLocaleUpperCase()}
                 </Link>
               </Dropdown>
             </li>
           );
         })}
+      <span className="gender-menu-item-li">BRANDS</span>
+
       </ul>
     </div>
   );
