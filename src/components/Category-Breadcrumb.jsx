@@ -12,13 +12,13 @@ export const CategoryBreadcrumb = () => {
       console.log('SNIPPET: ',snippet)
       console.log('URL: ', url)
       if(index !== pathSnippets.length - 1){
-        return [{title: <Link to={url}>{snippet}</Link>},
+        return [{title: <Link to={url}>{snippet.toUpperCase()}</Link>},
         {
           type: 'separator',
-          separator: '->'
+          separator: '->',
         }]
       }
-      return [{title: <Link to={url}>{snippet}</Link>}]
+      return [{title: <Link to={url} className="last-link">{snippet.toUpperCase()}</Link>}]
     });
   };
 
