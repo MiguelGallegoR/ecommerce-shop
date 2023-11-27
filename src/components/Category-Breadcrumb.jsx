@@ -9,8 +9,7 @@ export const CategoryBreadcrumb = () => {
   const linksBreadCrumb = (pathSnippets) => {
     return pathSnippets.map((snippet, index) => {
       const url = `/${pathSnippets.slice(0, index + 1).join("/")}`;
-      console.log('SNIPPET: ',snippet)
-      console.log('URL: ', url)
+      
       if(index !== pathSnippets.length - 1){
         return [{title: <Link to={url}>{snippet.toUpperCase()}</Link>},
         {
@@ -23,7 +22,6 @@ export const CategoryBreadcrumb = () => {
   };
 
   const result = linksBreadCrumb(pathSnippets).flat();
-  console.log('RESULT: ',result)
   
   return (
     <div className="breadcrumb-container">

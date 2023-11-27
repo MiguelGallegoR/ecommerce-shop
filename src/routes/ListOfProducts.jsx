@@ -17,7 +17,6 @@ export default function ListOfProducts() {
         return [];
       }
       const randomProducts = getRandomProducts(products, 10);
-      console.log(randomProducts);
       return randomProducts;
     },
   });
