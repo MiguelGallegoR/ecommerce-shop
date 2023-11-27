@@ -42,24 +42,22 @@ function Category() {
     return <span>Error: {error.message}</span>;
   }
 
-  console.log(data);
 
   const { caterogyGrops, randomProducts } = data;
   return (
     <div>
       <ul className="category-list-of-groups">
         {caterogyGrops[0].groups.map((group) => (
-          <li key={group}>
+          <Card size="small" key={group} hoverable={true} className="group-card">
             <Link
               to={`/${gender}/${category}/${group}`}
               className="category-list-of-groups-link"
             >
-              <h1 className="category-list-of-groups-title">
-                {capitalizeFirstLetter(group)}
-              </h1>
+              <h3 className="category-list-of-groups-title">
+                {group.toUpperCase()}
+              </h3>
             </Link>
-            <Divider />
-          </li>
+          </Card>
         ))}
       </ul>
 
