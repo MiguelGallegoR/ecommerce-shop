@@ -4,20 +4,31 @@ import { useParams, useLocation, Link } from "react-router-dom";
 import { router } from "../main";
 export const CategoryBreadcrumb = () => {
   const location = useLocation();
-  const pathSnippets = location.pathname.split('/').filter(i => i);
+  const pathSnippets = location.pathname.split("/").filter((i) => i);
 
+  const linksBreadCrumb = (pathSnippets) => {
+    return pathSnippets.map((snippet, index) => {
+      const url = `/${pathSnippets.slice(0, index + 1).join("/")}`;
+      console.log('SNIPPET: ',snippet)
+      console.log('URL: ', url)
+      if(index !== pathSnippets.length - 1){
+        return [{title: <Link to={url}>{snippet}</Link>},
+        {
+          type: 'separator',
+          separator: '->'
+        }]
+      }
+      return [{title: <Link to={url}>{snippet}</Link>}]
+    });
+  };
+
+  const result = linksBreadCrumb(pathSnippets).flat();
+  console.log('RESULT: ',result)
+  
   return (
-    <>
-      {pathSnippets.map((snippet, index) => {
-        const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
-        return (
-          <Breadcrumb key={url} items={[{ title: <Link to={url}>{snippet}</Link> }]}
-            separator="->"
-          />
-        );
-      })}
-    </>
-    
-  )
+    <div className="breadcrumb-container">
+      <Breadcrumb separator="" items={result} />
+    </div>
+  );
 };
 export default CategoryBreadcrumb;
