@@ -6,7 +6,7 @@
   }
 
   body{
-    font-family: 'prueba';
+    font-family: 'prueba'!important;
     margin: 0 auto;
     max-width: 1800px;
   }

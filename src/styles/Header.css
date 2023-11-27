@@ -42,6 +42,7 @@
 .dropdown-menu{
     display: grid;
     grid-template-columns: 1fr!important;
+    color: black!important;
 }
 
 
@@ -49,6 +50,10 @@
     display: grid;
     grid-template-columns: 1fr!important;
 }
+
+/* .dropdown-menu-item-container:hover{
+    background-color: red!important;
+} */
 
 .dropdown-menu-group-container{
     display: grid;
@@ -63,7 +68,19 @@
     padding-left: 1em;
 }
 
+.dropdown-menu-group:hover{
+    color: #1677ff!important;
+    background-color: rgba(0, 0, 0, 0.04)!important; 
+    
+}
+.dropdown-menu-category{
+    color: black;
+}
 
+.dropdown-menu-category:hover{
+    background-color: rgba(0, 0, 0, 0.04)!important; 
+
+}
 .user-menu-container{
     display: grid;
     grid-template-columns: 1fr 1fr;
