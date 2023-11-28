@@ -4,6 +4,8 @@ import { Card, Divider } from "antd";
 import { useParams, Link } from "react-router-dom";
 import { getAllProductsByGender } from "../services/allGenderProducts";
 import { capitalizeFirstLetter, getRandomProducts } from "../helpers/helpers";
+import { useProducts } from "../hooks/useProducts.jsx";
+
 import "../styles/Category.css";
 
 const { Meta } = Card;
@@ -13,42 +15,59 @@ function Category() {
   const queryClient = useQueryClient();
 
   //3. hago mi query
-  const { isPending, isError, data, error } = useQuery({
-    queryKey: ["categoryGroups", gender],
-    queryFn: async () => {
-      const productsWithGroups = await getAllProductsByGender(gender);
-      const { allProducts, groupsByCategory } = productsWithGroups;
-      if (!productsWithGroups) {
-        return [];
-      }
+  // const { isPending, isError, data, error } = useQuery({
+  //   queryKey: ["categoryGroups", gender],
+  //   queryFn: async () => {
+  //     const productsWithGroups = await getAllProductsByGender(gender);
+  //     const { allProducts, groupsByCategory } = productsWithGroups;
+  //     if (!productsWithGroups) {
+  //       return [];
+  //     }
 
-      const categoryProducts = allProducts.filter(
-        (product) => product.category[0] === category
-      );
-      const randomProducts = getRandomProducts(categoryProducts, 5);
+  //     const categoryProducts = allProducts.filter(
+  //       (product) => product.category[0] === category
+  //     );
+  //     const randomProducts = getRandomProducts(categoryProducts, 5);
 
-      const caterogyGrops = groupsByCategory.filter(
-        (group) => group.category === category
-      );
-      return { caterogyGrops, randomProducts };
-    },
+  //     const caterogyGrops = groupsByCategory.filter(
+  //       (group) => group.category === category
+  //     );
+  //     return { caterogyGrops, randomProducts };
+  //   },
+  // });
+
+  // if (isPending) {
+  //   return <span>Loading...</span>;
+  // }
+
+  // if (isError) {
+  //   return <span>Error: {error.message}</span>;
+  // }
+
+  // const { caterogyGrops, randomProducts } = data;
+
+  const { isPending, isError, allProducts, groupsByCategory } = useProducts({
+    gender
   });
+  const categoryProducts = allProducts?.filter(
+    (product) => product.category[0] === category
+  );
+  const randomProducts = getRandomProducts(categoryProducts, 5);
 
-  if (isPending) {
-    return <span>Loading...</span>;
-  }
+  const caterogyGrops = groupsByCategory?.filter(
+    (group) => group.category === category
+  );
 
-  if (isError) {
-    return <span>Error: {error.message}</span>;
-  }
-
-
-  const { caterogyGrops, randomProducts } = data;
   return (
     <div>
       <ul className="category-list-of-groups">
-        {caterogyGrops[0].groups.map((group) => (
-          <Card size="small" key={group} hoverable={true} className="group-card">
+        {caterogyGrops[0]?.groups.map((group) => (
+          <Card
+            size="small"
+            key={group}
+            hoverable={true}
+            className="group-card"
+          >
             <Link
               to={`/${gender}/${category}/${group}`}
               className="category-list-of-groups-link"
@@ -65,9 +84,9 @@ function Category() {
         Some of our {capitalizeFirstLetter(gender)}{" "}
         {capitalizeFirstLetter(category)} products
       </h2>
-      
+
       <ul className="list-of-products">
-        {randomProducts.map((product) => (
+        {randomProducts?.map((product) => (
           <li key={product._id} className="product">
             <Card
               hoverable
