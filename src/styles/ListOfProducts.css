@@ -17,6 +17,10 @@
     width: 100%;
     gap: 32px!important;
 }
+
+.product-link{
+    text-decoration: none;
+}
 .product{
     width: 240px;
     display: grid;
