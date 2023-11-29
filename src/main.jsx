@@ -12,6 +12,7 @@ import ListOfProducts from "./routes/ListOfProducts.jsx";
 import Product from "./routes/product.jsx";
 import { Gender } from "./routes/gender.jsx";
 import Category from "./routes/category.jsx";
+import Group from "./routes/group.jsx";
 
 import {
   useQuery,
@@ -43,6 +44,10 @@ export const router = createBrowserRouter([
       {
         path: "/:gender/:category",
         element: <Category />,
+      },
+      {
+        path: "/:gender/:category/:group",
+        element: <Group />,
       },
     ],
   },
