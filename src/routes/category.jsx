@@ -47,7 +47,7 @@ function Category() {
   // const { caterogyGrops, randomProducts } = data;
 
   const { isPending, isError, allProducts, groupsByCategory } = useProducts({
-    gender
+    gender,
   });
   const categoryProducts = allProducts?.filter(
     (product) => product.category[0] === category
@@ -88,19 +88,21 @@ function Category() {
       <ul className="list-of-products">
         {randomProducts?.map((product) => (
           <li key={product._id} className="product">
-            <Card
-              hoverable
-              className="product-card"
-              cover={
-                <img
-                  alt="example"
-                  src={`${import.meta.env.VITE_URL_PREFIX}${product.photo}`}
-                  className="product-image"
-                />
-              }
-            >
-              <Meta title={product.name} description={`${product.price}€`} />
-            </Card>
+            <Link to={`/products/${product._id}`} className="product-link">
+              <Card
+                hoverable
+                className="product-card"
+                cover={
+                  <img
+                    alt="example"
+                    src={`${import.meta.env.VITE_URL_PREFIX}${product.photo}`}
+                    className="product-image"
+                  />
+                }
+              >
+                <Meta title={product.name} description={`${product.price}€`} />
+              </Card>
+            </Link>
           </li>
         ))}
       </ul>

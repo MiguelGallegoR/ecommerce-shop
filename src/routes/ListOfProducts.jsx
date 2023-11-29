@@ -4,6 +4,8 @@ import { Card } from "antd";
 import "../styles/ListOfProducts.css";
 import { getRandomProducts } from "../helpers/helpers.js";
 const { Meta } = Card;
+import { Link } from "react-router-dom";
+
 export default function ListOfProducts() {
   //2. uso el query cliente
   const queryClient = useQueryClient();
@@ -37,19 +39,24 @@ export default function ListOfProducts() {
         <ul className="list-of-products">
           {data.map((product) => (
             <li key={product._id} className="product">
-              <Card
-                hoverable
-                className="product-card"
-                cover={
-                  <img
-                    alt="example"
-                    src={`${import.meta.env.VITE_URL_PREFIX}${product.photo}`}
-                    className="product-image"
+              <Link to={`/products/${product._id}`} className="product-link">
+                <Card
+                  hoverable
+                  className="product-card"
+                  cover={
+                    <img
+                      alt="example"
+                      src={`${import.meta.env.VITE_URL_PREFIX}${product.photo}`}
+                      className="product-image"
+                    />
+                  }
+                >
+                  <Meta
+                    title={product.name}
+                    description={`${product.price}€`}
                   />
-                }
-              >
-                <Meta title={product.name} description={`${product.price}€`} />
-              </Card>
+                </Card>
+              </Link>
             </li>
           ))}
         </ul>
