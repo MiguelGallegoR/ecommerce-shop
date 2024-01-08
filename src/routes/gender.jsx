@@ -3,10 +3,11 @@ import { useQueryClient, useQuery } from "@tanstack/react-query";
 import { Card } from "antd";
 import { getRandomProducts } from "../helpers/helpers.js";
 import getAllProductsByGender from "../services/allGenderProducts.js";
-import { useCategorys } from "../hooks/useCategorys.jsx";
+// import { useCategorys } from "../hooks/useCategorys.jsx";
 const { Meta } = Card;
 import { useParams, Link } from "react-router-dom";
 import { useProducts } from "../hooks/useProducts.jsx";
+import {menuItems} from "../mock/menuItems.js";
 export function Gender() {
   const { gender } = useParams();
   const queryClient = useQueryClient();
@@ -25,13 +26,13 @@ export function Gender() {
   //   },
   // });
 
-  const { isCategorysPending, isCategorysError, categorys } = useCategorys();
+  // const { isCategorysPending, isCategorysError, categorys } = useCategorys();
   const { isPending, isError, allProducts } = useProducts({ gender });
   const randomProducts = getRandomProducts(allProducts, 10);
   return (
     <div>
       <ul className="category-list-of-groups">
-        {categorys?.map((category) => (
+        {menuItems.categories.map((category) => (
           <Card
             size="small"
             key={category}
@@ -39,11 +40,11 @@ export function Gender() {
             className="group-card"
           >
             <Link
-              to={`/${gender}/${category}`}
+              to={`/${gender}/${Object.keys(category)[0]}`}
               className="category-list-of-groups-link"
             >
               <h3 className="category-list-of-groups-title">
-                {category.toUpperCase()}
+                {Object.values(category)[0].toUpperCase()}
               </h3>
             </Link>
           </Card>
