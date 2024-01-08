@@ -1,0 +1,35 @@
+.filters-container{
+    list-style: none;
+    display: grid;
+    grid-template-columns: 200px 950px;
+    /* background-color: aqua; */
+    gap: 2em;
+    align-items: center;
+}
+
+
+.filters-subcontainer{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    gap: 1em;
+    /* background-color: red; */
+}
+.filters-button{
+    width: 100%;
+    color: white;
+    background-color: black;
+}
+
+
+.filters-input{
+    width: 100px;
+}
+
+.filters-checkbox{
+    width: 100%;
+    align-items: center;
+}
+
+.search{
+    color: black!important;
+}
