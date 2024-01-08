@@ -10,3 +10,9 @@ export function capitalizeFirstLetter(str) {
   }
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+
+export const formatNumber = (value) => {
+  // Elimina cualquier caracter no numérico y limita a tres dígitos
+  return /^\d{1,3}$/.test(value) ? value : '';
+};
