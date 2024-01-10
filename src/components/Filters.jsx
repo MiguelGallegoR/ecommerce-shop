@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Button, InputNumber, Select, Space, Checkbox, Form } from "antd";
+import { useParams } from "react-router-dom";
+import { useGroupProducts } from "../hooks/useGroupProducts";
 import { formatNumber } from "../helpers/helpers";
 import { SearchOutlined } from "@ant-design/icons";
 import getFilterProducts from "../services/filterProducts";
 import { useQueryClient, useQuery } from "@tanstack/react-query";
 
 import "../styles/Group.css";
-export function Filters({ filters, setFilters, group }) {
+export function Filters({ filters, setFilters }) {
   const sizeOptions = [
     {
       value: "XXL",
@@ -34,8 +36,14 @@ export function Filters({ filters, setFilters, group }) {
     },
   ];
   const queryClient = useQueryClient();
+  const { gender, category, group } = useParams();
 
-  
+  const { isPending, isError, allGroupProductsByGender } = useGroupProducts({
+    group,
+    gender,
+    setFilters,
+  });
+
   const { refetch, data: allFilterProducts } = useQuery({
     queryKey: [
       "filterProducts",
@@ -46,6 +54,7 @@ export function Filters({ filters, setFilters, group }) {
     ],
     queryFn: async () => {
       return await getFilterProducts( group, filters.price, filters.size, filters.discount );
+     
     },
     refetchOnWindowFocus: false,
     enabled: false, //disable the query:
@@ -58,25 +67,41 @@ export function Filters({ filters, setFilters, group }) {
 
   useEffect(() => {
     console.log("VALOR DE FILTERS", filters);
-    refetch()
-    
+    if(filters.searchWasMade){
+      refetch()
+    }
   }, [filters]);
 
   useEffect(() => {
-    console.log('allFilterProducts: ', allFilterProducts);
-    setFilters((prev) => ({ ...prev, filtersProducts: allFilterProducts }));
+    setFilters((prev) => ({ ...prev, products: allFilterProducts }));
   }, [allFilterProducts]);
   const handleSubmit = async (formValues) => {
-    console.log(formValues);
     setFilters((prev) => ({
       ...prev,
       ...formValues,
       discount: formValues.discount ? 1 : 0,
+      searchWasMade: true
     }));
-    console.log(formValues)
-  
+    
   };
 
+  const handleClearFilters = () => {
+    setFilters((prev) => ({
+      ...prev,
+      size: null,
+      price: null,
+      discount: null,
+      active: false,
+      searchWasMade: false,
+      products: allGroupProductsByGender,
+    }));
+  }
+
+  useEffect(() => {
+    if(!filters.active){
+      setFilters((prev) => ({ ...prev, products: allGroupProductsByGender }));
+    }
+  }, [filters.active])
   return (
     <div className="filters-container">
       <Button onClick={handleClick} className="filters-button">
@@ -109,6 +134,8 @@ export function Filters({ filters, setFilters, group }) {
           <Form.Item name="discount" valuePropName="checked">
             <Checkbox className="filters-checkbox">On Discount</Checkbox>
           </Form.Item>
+
+          <Button onClick={handleClearFilters}>Clear</Button>
 
           <Button icon={<SearchOutlined />} htmlType="submit" />
         </Form>
