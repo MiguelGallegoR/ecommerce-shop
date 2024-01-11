@@ -3,7 +3,6 @@ import { useQueryClient, useQuery } from "@tanstack/react-query";
 import { Card } from "antd";
 import { getRandomProducts } from "../helpers/helpers.js";
 import getAllProductsByGender from "../services/allGenderProducts.js";
-// import { useCategorys } from "../hooks/useCategorys.jsx";
 const { Meta } = Card;
 import { useParams, Link } from "react-router-dom";
 import { useProducts } from "../hooks/useProducts.jsx";
@@ -12,21 +11,7 @@ export function Gender() {
   const { gender } = useParams();
   const queryClient = useQueryClient();
 
-  // //3. hago mi query
-  // const { isPending, isError, data, error } = useQuery({
-  //   queryKey: ["products", gender],
-  //   queryFn: async () => {
-  //     const productsWithGroups = await getAllProductsByGender(gender);
-  //     const { allProducts, groups } = productsWithGroups;
-  //     if (!productsWithGroups) {
-  //       return [];
-  //     }
-  //     const randomProducts = getRandomProducts(allProducts, 10);
-  //     return randomProducts;
-  //   },
-  // });
 
-  // const { isCategorysPending, isCategorysError, categorys } = useCategorys();
   const { isPending, isError, allProducts } = useProducts({ gender });
   const randomProducts = getRandomProducts(allProducts, 10);
   return (
@@ -35,7 +20,7 @@ export function Gender() {
         {menuItems.categories.map((category) => (
           <Card
             size="small"
-            key={category}
+            key={crypto.randomUUID()}
             hoverable={true}
             className="group-card"
           >
