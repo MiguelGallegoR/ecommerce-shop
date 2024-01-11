@@ -7,6 +7,28 @@ import { useCategorys } from "../hooks/useCategorys.jsx";
 import { useGroups } from "../hooks/useGroups.jsx";
 import { menuItems } from "../mock/menuItems.js";
 export function GenderMenu() {
+  const items = (g)=>{
+     
+   return menuItems.categories.map((c) => (
+      {
+      key: crypto.randomUUID(),
+      label: (
+        <Link
+        to={`/${Object.keys(
+          g
+        )[0].toLowerCase()}/${Object.values(
+          c
+        )[0].toLowerCase()}`}
+        key={crypto.randomUUID()}
+      >
+        {Object.values(c)[0].toUpperCase()}
+      </Link>
+      )
+      
+    }
+    ))
+  }
+   
   
   return (
     <div className="gender-menu-container">
@@ -14,35 +36,16 @@ export function GenderMenu() {
         {menuItems.genders.map((g) => (
           <Dropdown
             menu={{
-              items: [
-                {
-                  key: 1,
-                  label: (
-                    <div className="dropdown-menu-item-container">
-                      {menuItems.categories.map((c) => (
-                        <Link
-                          to={`/${Object.keys(
-                            g
-                          )[0].toLowerCase()}/${Object.values(
-                            c
-                          )[0].toLowerCase()}`}
-                          key={Object.values(c)[0]}
-                        >
-                          {Object.values(c)[0].toUpperCase()}
-                        </Link>
-                      ))}
-                    </div>
-                  ),
-                },
-              ],
+              items: items(g),
             }}
+            key={crypto.randomUUID()}
           >
-            <li key={Object.keys(g)[0]} className="gender-menu-item-li">
+            <li key={crypto.randomUUID()} className="gender-menu-item-li">
               <Link to={`/${Object.keys(g)[0].toLowerCase()}`}>{Object.values(g)[0].toUpperCase()}</Link>
             </li>
           </Dropdown>
         ))}
-        <span className="gender-menu-item-li">BRANDS</span>
+        {/* <span className="gender-menu-item-li">BRANDS</span> */}
       </ul>
     </div>
   );
