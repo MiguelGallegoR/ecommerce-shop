@@ -11,13 +11,13 @@ export const CategoryBreadcrumb = () => {
       const url = `/${pathSnippets.slice(0, index + 1).join("/")}`;
       
       if(index !== pathSnippets.length - 1){
-        return [{title: <Link to={url}>{snippet.toUpperCase()}</Link>},
+        return [{title: <Link to={url} key={crypto.randomUUID()}>{snippet.toUpperCase()}</Link>},
         {
           type: 'separator',
           separator: '->',
         }]
       }
-      return [{title: <Link to={url} className="last-link">{snippet.toUpperCase()}</Link>}]
+      return [{title: <Link to={url} className="last-link" key={crypto.randomUUID()}>{snippet.toUpperCase()}</Link>}]
     });
   };
 
