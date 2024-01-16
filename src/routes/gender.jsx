@@ -12,8 +12,9 @@ export function Gender() {
   const queryClient = useQueryClient();
 
 
-  const { isPending, isError, allProducts } = useProducts({ gender });
-  const randomProducts = getRandomProducts(allProducts, 10);
+  const { isPending, isError, allGenderProducts } = useProducts({ gender: gender });
+  const randomGenderProducts = getRandomProducts(allGenderProducts, 5);
+
   return (
     <div>
       <ul className="category-list-of-groups">
@@ -38,7 +39,7 @@ export function Gender() {
       <h1 className="list-of-products-title">Some {gender} products</h1>
       <div className="list-of-products-container">
         <ul className="list-of-products">
-          {randomProducts?.map((product) => (
+          { randomGenderProducts ? randomGenderProducts?.map((product) => (
             <li key={product._id} className="product">
               <Link to={`/products/${product._id}`} className="product-link">
                 <Card
@@ -59,7 +60,7 @@ export function Gender() {
                 </Card>
               </Link>
             </li>
-          ))}
+          )) : isPending }
         </ul>
       </div>
     </div>
