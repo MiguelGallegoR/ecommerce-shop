@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useQueryClient, useQuery } from "@tanstack/react-query";
 import { Card, Divider } from "antd";
 import { useParams, Link } from "react-router-dom";
@@ -46,22 +46,23 @@ function Category() {
 
   // const { caterogyGrops, randomProducts } = data;
 
-  const { isPending, isError, allProducts, groupsByCategory } = useProducts({
-    gender,
+  const { isPending, isError, caterogyGrops, randomProducts } = useProducts({
+    gender, category
   });
-  const categoryProducts = allProducts?.filter(
-    (product) => product.category[0] === category
-  );
-  const randomProducts = getRandomProducts(categoryProducts, 5);
+  // const categoryProducts = allProducts?.filter(
+  //   (product) => product.category[0] === category
+  // );
+  // const randomProducts = getRandomProducts(categoryProducts, 5);
 
-  const caterogyGrops = groupsByCategory?.filter(
-    (group) => group.category === category
-  );
+  // const caterogyGrops = groupsByCategory?.filter(
+  //   (group) => group.category === category
+  // );
+
 
   return (
     <div>
       <ul className="category-list-of-groups">
-        {caterogyGrops[0]?.groups.map((group) => (
+        {caterogyGrops ? caterogyGrops[0]?.groups.map((group) => (
           <Card
             size="small"
             key={group}
@@ -77,7 +78,7 @@ function Category() {
               </h3>
             </Link>
           </Card>
-        ))}
+        )): isPending}
       </ul>
 
       <h2 className="list-of-products-title" style={{ marginBottom: "1.5em" }}>
@@ -86,7 +87,7 @@ function Category() {
       </h2>
 
       <ul className="list-of-products">
-        {randomProducts?.map((product) => (
+        { randomProducts ? randomProducts?.map((product) => (
           <li key={product._id} className="product">
             <Link to={`/products/${product._id}`} className="product-link">
               <Card
@@ -104,7 +105,7 @@ function Category() {
               </Card>
             </Link>
           </li>
-        ))}
+        )) : isPending}
       </ul>
     </div>
   );
