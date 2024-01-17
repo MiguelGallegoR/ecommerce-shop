@@ -8,6 +8,7 @@ import getFilterProducts from "../services/filterProducts";
 import { useQueryClient, useQuery } from "@tanstack/react-query";
 
 import "../styles/Group.css";
+import { useFilterProducts } from "../hooks/useFilterProducts";
 export function Filters({ filters, setFilters }) {
   const sizeOptions = [
     {
@@ -44,22 +45,12 @@ export function Filters({ filters, setFilters }) {
     setFilters,
   });
 
-  const { refetch, data: allFilterProducts } = useQuery({
-    queryKey: [
-      "filterProducts",
-      group,
-      filters.price,
-      filters.size,
-      filters.discount
-    ],
-    queryFn: async () => {
-      return await getFilterProducts( group, filters.price, filters.size, filters.discount );
-     
-    },
-    refetchOnWindowFocus: false,
-    enabled: false, //disable the query:
-    //this is how we keep it from running on component mount.
-  });
+  const { refetch, allFilterProducts } = useFilterProducts({
+    group,
+    price: filters.price,
+    size: filters.size,
+    discount: filters.discount
+  })
 
   const handleClick = () => {
     setFilters((prev) => ({ ...prev, active: !prev.active }));
