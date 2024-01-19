@@ -29,9 +29,8 @@ export default function Group() {
         <h2>{filters.products?.length}</h2>
       </div>
 
-      <Filters filters={filters} setFilters={setFilters} />
 
-      <FilteredListOfProducts filters={filters} />
+      <FilteredListOfProducts filters={filters} setFilters={setFilters} />
       
     </div>
   );
