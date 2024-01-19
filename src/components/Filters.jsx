@@ -9,7 +9,7 @@ import { useQueryClient, useQuery } from "@tanstack/react-query";
 
 import "../styles/Group.css";
 import { useFilterProducts } from "../hooks/useFilterProducts";
-export function Filters({ filters, setFilters }) {
+export function Filters({ filters, setFilters, children }) {
   const sizeOptions = [
     {
       value: "XXL",
@@ -37,20 +37,20 @@ export function Filters({ filters, setFilters }) {
     },
   ];
   const queryClient = useQueryClient();
-  const { gender, category, group } = useParams();
+  const { gender, group } = useParams();
 
-  const { isPending, isError, allGroupProductsByGender } = useGroupProducts({
+  const { isPending, isError, allGroupProductsByGender, fetchNextPage, hasNextPage, isFetchingNextPage } = useGroupProducts({
     group,
     gender,
     setFilters,
   });
 
-  const { refetch, allFilterProducts } = useFilterProducts({
+  const { refetch, resultProducts, nextCursor } = useFilterProducts({
     group,
     price: filters.price,
     size: filters.size,
-    discount: filters.discount
-  })
+    discount: filters.discount,
+  });
 
   const handleClick = () => {
     setFilters((prev) => ({ ...prev, active: !prev.active }));
@@ -58,22 +58,21 @@ export function Filters({ filters, setFilters }) {
 
   useEffect(() => {
     console.log("VALOR DE FILTERS", filters);
-    if(filters.searchWasMade){
-      refetch()
+    if (filters.searchWasMade) {
+      refetch();
     }
   }, [filters]);
 
   useEffect(() => {
-    setFilters((prev) => ({ ...prev, products: allFilterProducts }));
-  }, [allFilterProducts]);
+    setFilters((prev) => ({ ...prev, products: resultProducts }));
+  }, [resultProducts]);
   const handleSubmit = async (formValues) => {
     setFilters((prev) => ({
       ...prev,
       ...formValues,
       discount: formValues.discount ? 1 : 0,
-      searchWasMade: true
+      searchWasMade: true,
     }));
-    
   };
 
   const handleClearFilters = () => {
@@ -86,13 +85,13 @@ export function Filters({ filters, setFilters }) {
       searchWasMade: false,
       products: allGroupProductsByGender,
     }));
-  }
+  };
 
   useEffect(() => {
-    if(!filters.active){
+    if (!filters.active) {
       setFilters((prev) => ({ ...prev, products: allGroupProductsByGender }));
     }
-  }, [filters.active])
+  }, [filters.active]);
   return (
     <div className="filters-container">
       <Button onClick={handleClick} className="filters-button">
@@ -131,6 +130,12 @@ export function Filters({ filters, setFilters }) {
           <Button icon={<SearchOutlined />} htmlType="submit" />
         </Form>
       )}
+      <div>
+        {children}
+        <Button onClick={ async () => {await fetchNextPage()}} disabled={!hasNextPage || isFetchingNextPage} className="filters-button">
+          Load more
+        </Button>
+      </div>
     </div>
   );
 }
