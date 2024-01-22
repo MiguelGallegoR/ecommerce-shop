@@ -25,7 +25,7 @@ export const useProducts = ({ gender, category }) => {
     const categoryProducts = allProducts?.filter(
       (product) => product.category[0] === category
     );
-    const randomProducts = getRandomProducts(categoryProducts, 5);
+    const randomProducts = getRandomProducts(categoryProducts, 6);
   
     const caterogyGrops = groupsByCategory?.filter(
       (group) => group.category === category
