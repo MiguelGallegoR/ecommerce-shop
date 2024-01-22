@@ -130,7 +130,7 @@ export function Filters({ filters, setFilters, children }) {
           <Button icon={<SearchOutlined />} htmlType="submit" />
         </Form>
       )}
-      <div>
+      <div className="filters-subcontainer-list">
         {children}
         <Button onClick={ async () => {await fetchNextPage()}} disabled={!hasNextPage || isFetchingNextPage} className="filters-button">
           Load more
