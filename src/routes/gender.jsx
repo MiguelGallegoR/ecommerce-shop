@@ -13,7 +13,7 @@ export function Gender() {
 
 
   const { isPending, isError, allGenderProducts } = useProducts({ gender: gender });
-  const randomGenderProducts = getRandomProducts(allGenderProducts, 5);
+  const randomGenderProducts = getRandomProducts(allGenderProducts, 6);
 
   return (
     <div>
