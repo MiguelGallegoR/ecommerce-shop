@@ -56,16 +56,13 @@ export function Filters({ filters, setFilters, children }) {
     size: filters.size,
     discount: filters.discount,
     search: search,
-   
   });
 
   let allFilterProducts;
 
-
   const handleClick = () => {
     setFilters((prev) => ({ ...prev, active: !prev.active }));
   };
-
 
   //Si cambia el valor de filters pon search a false para
   //que al darle a la lupa vuelva a buscar
@@ -76,13 +73,11 @@ export function Filters({ filters, setFilters, children }) {
   }, [filters]);
 
   useEffect(() => {
-
-      handleSubmit({
-        price: undefined,
-        size: undefined,
-        discount: undefined,
-      });
-
+    handleSubmit({
+      price: undefined,
+      size: undefined,
+      discount: undefined,
+    });
   }, []);
 
   useEffect(() => {
@@ -150,39 +145,16 @@ export function Filters({ filters, setFilters, children }) {
       )}
       <div className="filters-subcontainer-list">
         {children}
-        {allFilterProducts?.length > 0 ? (
-          <div>
-            <span>Current Page: {pageParam + 1}</span>
-            <button
-              onClick={() => setPageParam((old) => Math.max(old - 1, 0))}
-              disabled={pageParam === 0}
-            >
-              Previous Page
-            </button>{" "}
-            <button
-              onClick={() => {
-                if (!isPlaceholderData && data.hasMore) {
-                  setPageParam((old) => old + 1);
-                }
-              }}
-              // Disable the Next PageParam button until we know a next PageParam is available
-              disabled={isPlaceholderData || !data?.hasMore}
-            >
-              Next PageParam
-            </button>
-            {isFetching ? <span> Loading...</span> : null}{" "}
-          </div>
-        ) : (
-          <Button
-            onClick={async () => {
-              await fetchNextPage();
-            }}
-            disabled={!hasNextPage || isFetchingNextPage}
-            className="filters-button"
-          >
-            Load more
-          </Button>
-        )}
+
+        <Button
+          onClick={async () => {
+            await fetchNextPage();
+          }}
+          disabled={!hasNextPage || isFetchingNextPage}
+          className="filters-button"
+        >
+          Load more
+        </Button>
       </div>
     </div>
   );
