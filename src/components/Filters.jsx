@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button, InputNumber, Select, Space, Checkbox, Form } from "antd";
 import { useParams } from "react-router-dom";
 import { useGroupProducts } from "../hooks/useGroupProducts";
@@ -39,40 +39,63 @@ export function Filters({ filters, setFilters, children }) {
   const queryClient = useQueryClient();
   const { gender, group } = useParams();
 
-  const { isPending, isError, allGroupProductsByGender, fetchNextPage, hasNextPage, isFetchingNextPage } = useGroupProducts({
+  const [search, setSearch] = useState(false);
+
+  const {
+    isPending,
+    isError,
+    allGroupProductsByGender,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useGroupProducts({
     group,
     gender,
     setFilters,
-  });
-
-  const { refetch, resultProducts, nextCursor } = useFilterProducts({
-    group,
     price: filters.price,
     size: filters.size,
     discount: filters.discount,
+    search: search,
+   
   });
+
+  let allFilterProducts;
+
 
   const handleClick = () => {
     setFilters((prev) => ({ ...prev, active: !prev.active }));
   };
 
+
+  //Si cambia el valor de filters pon search a false para
+  //que al darle a la lupa vuelva a buscar
   useEffect(() => {
-    console.log("VALOR DE FILTERS", filters);
-    if (filters.searchWasMade) {
-      refetch();
+    if (search && filters.products?.length > 0) {
+      setSearch(false);
     }
   }, [filters]);
 
   useEffect(() => {
-    setFilters((prev) => ({ ...prev, products: resultProducts }));
-  }, [resultProducts]);
+
+      handleSubmit({
+        price: undefined,
+        size: undefined,
+        discount: undefined,
+      });
+
+  }, []);
+
+  useEffect(() => {
+    console.log("VALOR DE SEARCH", search);
+  }, [search]);
+
   const handleSubmit = async (formValues) => {
     setFilters((prev) => ({
       ...prev,
       ...formValues,
       discount: formValues.discount ? 1 : 0,
-      searchWasMade: true,
     }));
+    setSearch(true);
   };
 
   const handleClearFilters = () => {
@@ -82,16 +105,16 @@ export function Filters({ filters, setFilters, children }) {
       price: null,
       discount: null,
       active: false,
-      searchWasMade: false,
       products: allGroupProductsByGender,
     }));
+    setSearch(false);
   };
 
-  useEffect(() => {
-    if (!filters.active) {
-      setFilters((prev) => ({ ...prev, products: allGroupProductsByGender }));
-    }
-  }, [filters.active]);
+  // useEffect(() => {
+  //   if (!filters.active) {
+  //     setFilters((prev) => ({ ...prev, products: allGroupProductsByGender }));
+  //   }
+  // }, [filters.active]);
   return (
     <div className="filters-container">
       <Button onClick={handleClick} className="filters-button">
@@ -132,9 +155,39 @@ export function Filters({ filters, setFilters, children }) {
       )}
       <div className="filters-subcontainer-list">
         {children}
-        <Button onClick={ async () => {await fetchNextPage()}} disabled={!hasNextPage || isFetchingNextPage} className="filters-button">
-          Load more
-        </Button>
+        {allFilterProducts?.length > 0 ? (
+          <div>
+            <span>Current Page: {pageParam + 1}</span>
+            <button
+              onClick={() => setPageParam((old) => Math.max(old - 1, 0))}
+              disabled={pageParam === 0}
+            >
+              Previous Page
+            </button>{" "}
+            <button
+              onClick={() => {
+                if (!isPlaceholderData && data.hasMore) {
+                  setPageParam((old) => old + 1);
+                }
+              }}
+              // Disable the Next PageParam button until we know a next PageParam is available
+              disabled={isPlaceholderData || !data?.hasMore}
+            >
+              Next PageParam
+            </button>
+            {isFetching ? <span> Loading...</span> : null}{" "}
+          </div>
+        ) : (
+          <Button
+            onClick={async () => {
+              await fetchNextPage();
+            }}
+            disabled={!hasNextPage || isFetchingNextPage}
+            className="filters-button"
+          >
+            Load more
+          </Button>
+        )}
       </div>
     </div>
   );
