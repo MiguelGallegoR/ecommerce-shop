@@ -110,11 +110,6 @@ export function Filters({ filters, setFilters, children }) {
     setSearch(false);
   };
 
-  // useEffect(() => {
-  //   if (!filters.active) {
-  //     setFilters((prev) => ({ ...prev, products: allGroupProductsByGender }));
-  //   }
-  // }, [filters.active]);
   return (
     <div className="filters-container">
       <Button onClick={handleClick} className="filters-button">

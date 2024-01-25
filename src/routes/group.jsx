@@ -15,7 +15,6 @@ export default function Group() {
     size: null,
     price: null,
     discount: null,
-    searchWasMade: false,
     products: [],
   });
   const { gender, group } = useParams();
