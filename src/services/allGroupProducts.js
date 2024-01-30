@@ -1,4 +1,4 @@
-export async function getAllGroupProducts({group, pageParam, price, size, discount} ) {
+export async function getAllGroupProducts({group, page, price, size, discount, gender} ) {
    // Si price, size o discount son undefined, se asigna un valor por defecto
    const priceParam = price !== undefined  ? `price=${price}` : "";
 
@@ -6,10 +6,10 @@ export async function getAllGroupProducts({group, pageParam, price, size, discou
 
    const discountParam = discount !== undefined ? `discount=${discount}` : "";
 
-  const url = `http://localhost:1234/products/byGroup?group=${group}&${priceParam}&${sizeParam}&${discountParam}&page=${pageParam}`;
+   const genderParam = gender ? `gender=${gender}` : "";
+  const url = `http://localhost:1234/products/byGroup?group=${group}&${genderParam}&${priceParam}&${sizeParam}&${discountParam}&page=${page}&pageSize=6`;
   const response = await fetch(url);
   const data =  await response.json();
-  const nextCursor = Number(data.page) + 1;
-  return { products: data.resultProducts, nextCursor: nextCursor }
+  return data
 }
 export default getAllGroupProducts;

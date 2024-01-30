@@ -15,9 +15,15 @@ export default function Group() {
     size: null,
     price: null,
     discount: null,
-    products: [],
+
   });
+  const [search, setSearch] = useState(false);
+
   const { gender, group } = useParams();
+
+  
+
+
 
   return (
     <div>
@@ -28,8 +34,8 @@ export default function Group() {
         <h2>{filters.products?.length}</h2>
       </div>
 
-
-      <FilteredListOfProducts filters={filters} setFilters={setFilters} />
+      <Filters filters={filters} setFilters={setFilters} search={search} setSearch={setSearch} />
+      <FilteredListOfProducts gender={gender} group={group} filters={filters} search={search} setSearch={setSearch}/>
       
     </div>
   );
