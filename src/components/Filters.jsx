@@ -9,7 +9,7 @@ import { useQueryClient, useQuery } from "@tanstack/react-query";
 
 import "../styles/Group.css";
 import { useFilterProducts } from "../hooks/useFilterProducts";
-export function Filters({ filters, setFilters, children }) {
+export function Filters({ filters, setFilters, search, setSearch }) {
   const sizeOptions = [
     {
       value: "XXL",
@@ -39,38 +39,13 @@ export function Filters({ filters, setFilters, children }) {
   const queryClient = useQueryClient();
   const { gender, group } = useParams();
 
-  const [search, setSearch] = useState(false);
+  
 
-  const {
-    isPending,
-    isError,
-    allGroupProductsByGender,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useGroupProducts({
-    group,
-    gender,
-    setFilters,
-    price: filters.price,
-    size: filters.size,
-    discount: filters.discount,
-    search: search,
-  });
-
-  let allFilterProducts;
 
   const handleClick = () => {
     setFilters((prev) => ({ ...prev, active: !prev.active }));
   };
 
-  //Si cambia el valor de filters pon search a false para
-  //que al darle a la lupa vuelva a buscar
-  useEffect(() => {
-    if (search && filters.products?.length > 0) {
-      setSearch(false);
-    }
-  }, [filters]);
 
   useEffect(() => {
     handleSubmit({
@@ -80,9 +55,12 @@ export function Filters({ filters, setFilters, children }) {
     });
   }, []);
 
+
   useEffect(() => {
-    console.log("VALOR DE SEARCH", search);
-  }, [search]);
+    console.log("VALOR DE filters", filters);
+  }, [filters]);
+
+
 
   const handleSubmit = async (formValues) => {
     setFilters((prev) => ({
@@ -99,8 +77,7 @@ export function Filters({ filters, setFilters, children }) {
       size: null,
       price: null,
       discount: null,
-      active: false,
-      products: allGroupProductsByGender,
+      active: false
     }));
     setSearch(false);
   };
@@ -142,20 +119,7 @@ export function Filters({ filters, setFilters, children }) {
 
           <Button icon={<SearchOutlined />} htmlType="submit" />
         </Form>
-      )}
-      <div className="filters-subcontainer-list">
-        {children}
-
-        <Button
-          onClick={async () => {
-            await fetchNextPage();
-          }}
-          disabled={!hasNextPage || isFetchingNextPage}
-          className="filters-button"
-        >
-          Load more
-        </Button>
-      </div>
+      )}    
     </div>
   );
 }
